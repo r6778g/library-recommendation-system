@@ -12,7 +12,7 @@ class User(models.Model):
 
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=15, unique=True)
+    phone = models.CharField(max_length=12, unique=True)
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
