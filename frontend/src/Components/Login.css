@@ -1,0 +1,127 @@
+/* ===== MODERN LOGIN FORM ===== */
+.login-form {
+  background: white;
+  padding: 3.5rem 2.5rem; /* More spacious padding */
+  border-radius: 1.25rem; /* Increased rounded corners */
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12); /* Softer, more natural shadow */
+  width: 100%;
+  max-width: 28rem; /* Optimal reading width */
+  margin: 5rem auto; /* More vertical spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem; /* Comfortable spacing between elements */
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border for depth */
+}
+
+/* Form Title */
+.login-form h2 {
+  margin: 0 0 1.25rem 0; /* Better vertical rhythm */
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2b50; /* Darker for better contrast */
+  letter-spacing: -0.5px;
+}
+
+/* Input Fields - Modern Style */
+.login-form input {
+  width: 100%;
+  padding: 1.1rem 0.5rem; /* Generous padding */
+  border: 1px solid #e0e6ed; /* Softer border */
+  border-radius: 0.75rem; /* More rounded */
+  font-size: 1rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
+  background-color: #f8fafc; /* Very light background */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.login-form input:focus {
+  border-color: #3b82f6; /* Bright blue focus */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background-color: #ffffff;
+}
+
+/* Primary Button - Blue Gradient */
+.login-form button[type="submit"] {
+  width: 105%;
+  padding: 1.1rem 1rem;  /* Comfortable tap target */
+  background: linear-gradient(135deg, #2563eb, #1d4ed8); /* Professional blue */
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 0.75rem; /* Matches inputs */
+  cursor: pointer;
+  transition: all 0.25s ease, transform 0.1s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+
+.login-form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Signup Section */
+.signup-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #64748b; /* Subdued text */
+}
+
+.signup-link p {
+  margin-bottom: 0.75rem;
+}
+
+/* Secondary Button - Green Gradient */
+
+
+.signup-link .signup-button:hover {
+  background: linear-gradient(135deg, #15803d, #166534);
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15);
+}
+
+
+.signup-link button:hover {
+  background: linear-gradient(135deg, #15803d, #166534); /* Darker gradient */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.signup-link button:active {
+  transform: translateY(0);
+}
+
+/* Error Message */
+.login-form p[style*="color: red"] {
+  margin: -0.5rem 0 0.5rem 0;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #dc2626 !important; /* Better error red */
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .login-form {
+    padding: 2.5rem 1.72rem;
+    margin: 3rem auto;
+    border-radius: 1rem;
+  }
+  
+  .login-form h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-form {
+  animation: fadeIn 0.4s ease-out forwards;
+}
