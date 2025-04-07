@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+
 function Dashboard() {
   const [books, setBooks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,29 +39,39 @@ function Dashboard() {
     navigate(`/book/${id}`);
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">📚 Book Dashboard</h1>
+     <header className="dashboard-header">
+  <h1 className="dashboard-title">📚 Book Dashboard</h1>
 
-      <div className="controls">
-        <input
-          type="text"
-          placeholder="🔎 Search by Title or Author"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          className="search-input"
-        />
+  <div className="header-controls">
+    <button className="home-button" onClick={() => navigate('/HomePage')}>🏠 Home</button>
 
-        <select
-          value={departmentFilter}
-          onChange={e => setDepartmentFilter(e.target.value)}
-          className="department-select"
-        >
-          {departments.map(dep => (
-            <option key={dep} value={dep}>{dep}</option>
-          ))}
-        </select>
-      </div>
+    <input
+      type="text"
+      placeholder="🔎 Search by Title or Author"
+      value={searchQuery}
+      onChange={e => setSearchQuery(e.target.value)}
+      className="search-input"
+    />
+
+    <select
+      value={departmentFilter}
+      onChange={e => setDepartmentFilter(e.target.value)}
+      className="department-select"
+    >
+      {departments.map(dep => (
+        <option key={dep} value={dep}>{dep}</option>
+      ))}
+    </select>
+  </div>
+</header>
+
+    
 
       <div className="cards-container">
         {filteredBooks.length === 0 ? (

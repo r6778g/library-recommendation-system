@@ -128,3 +128,14 @@ def book_list(request):
     serializer = BookSerializer(books, many=True)
     return Response(serializer.data)
 
+
+class RecommendedBooksView(APIView):
+    def get(self, request):
+        # logic to filter recommended books
+        return Response(data)
+
+class RandomBooksView(APIView):
+    def get(self, request):
+        books = Book.objects.order_by('?')[:15]
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)

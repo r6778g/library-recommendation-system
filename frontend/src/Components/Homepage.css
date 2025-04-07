@@ -1,0 +1,45 @@
+.homepage-container {
+    padding: 20px;
+  }
+  
+  .slider-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .carousel-btn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s;
+  }
+  
+  .carousel-btn:hover {
+    transform: scale(1.2);
+  }
+  
+  .book-card.large {
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  
+  .book-card.large:hover {
+    transform: scale(1.03);
+  }
+  

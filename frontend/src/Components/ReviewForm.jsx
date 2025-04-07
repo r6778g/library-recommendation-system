@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ReviewForm = ({ bookId, userId, fetchBookReviews }) => {
+const ReviewForm = ({ bookId, fetchBookReviews }) => {
     const [ratingValue, setRatingValue] = useState(5);
     const [commentText, setCommentText] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const reviewData = {
-            book: bookId,  // ✅ Ensure bookId is passed as a prop
-            user: userId,  // ✅ Ensure userId is provided
+            book: bookId,
             rating: ratingValue,
             comment: commentText,
         };
 
         try {
             const response = await axios.post("http://localhost:8000/api/reviews/", reviewData, {
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
             });
             console.log("Response:", response.data);
             alert("Review added successfully!");
-            fetchBookReviews();  // ✅ Refresh reviews after adding a new one
+            fetchBookReviews(); // Refresh the review list
         } catch (error) {
             console.error("Error adding review:", error.response?.data);
             alert("Failed to submit review.");
@@ -35,7 +34,8 @@ const ReviewForm = ({ bookId, userId, fetchBookReviews }) => {
                 type="number"
                 value={ratingValue}
                 onChange={(e) => setRatingValue(Number(e.target.value))}
-                min="1" max="5"
+                min="1"
+                max="5"
                 className="border p-2 w-full"
             />
 

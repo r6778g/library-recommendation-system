@@ -25,7 +25,9 @@ class User(models.Model):
 
 class Review(models.Model):
     book = models.ForeignKey('importcsv.Book', on_delete=models.CASCADE, related_name="reviews")  # ✅ Reference Book from importcsv app
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # ✅ Add user reference
+  
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     rating = models.IntegerField()
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

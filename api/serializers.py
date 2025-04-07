@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .models import User
 from importcsv.models import Book
 from .models import Review  # Make sure to import the Review model
+from django.contrib import admin
+admin.site.site_header = "📚 Library Recommendation Admin"
+admin.site.site_title = "Library Recommender"
+admin.site.index_title = "Welcome to the Library Recommendation Dashboard"
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
