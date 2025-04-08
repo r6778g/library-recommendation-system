@@ -1,18 +1,33 @@
 .homepage-container {
-    padding: 20px;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #2d5ea8;
   }
   
-  .slider-title {
-    text-align: center;
+  .user-info {
+    background-color: #285da4;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .slider-title,
+  .random-title {
+    margin: 2rem 0 1rem;
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    color: #1f2937;
   }
   
   .carousel-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    margin-bottom: 3rem;
   }
   
   .carousel-btn {
@@ -20,26 +35,37 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #333;
-    transition: transform 0.2s;
+    color: #374151;
+    transition: color 0.3s;
   }
   
   .carousel-btn:hover {
-    transform: scale(1.2);
+    color: #1d4ed8;
+  }
+  
+  .book-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  
+  .book-card:hover {
+    transform: scale(1.03);
   }
   
   .book-card.large {
-    width: 300px;
-    padding: 20px;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.2s;
+    width: 320px;
+    min-width: 300px;
   }
   
-  .book-card.large:hover {
-    transform: scale(1.03);
+  .random-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+    padding: 0 1rem;
   }
   

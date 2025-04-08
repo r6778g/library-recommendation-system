@@ -1,6 +1,4 @@
 
-
-from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
 from .serializers import UserSerializer
@@ -8,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import traceback
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view
+
 from rest_framework.response import Response
 from importcsv.models import Book
 from .serializers import BookSerializer
@@ -16,6 +14,9 @@ from rest_framework import viewsets
 from .models import Review  # Make sure you import the model
 from .serializers import ReviewSerializer 
 from rest_framework.views import APIView 
+from rest_framework.response import Response
+from .recommendation import get_recommendations
+
 
 
 class BookViewSet(viewsets.ModelViewSet):  # ✅ Ensure this class exists
@@ -139,3 +140,13 @@ class RandomBooksView(APIView):
         books = Book.objects.order_by('?')[:15]
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def recommend_books(request):
+    title = request.GET.get('book')
+    if not title:
+        return Response({'error': 'Missing book title'}, status=400)
+
+    results = get_recommendations(title)
+    return Response({'recommendations': results})
