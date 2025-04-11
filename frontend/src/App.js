@@ -5,6 +5,7 @@ import Signup from './Components/Signup';
 import Dashboard from './Components/Dashboard';
 import BookRatingPage from "./Components/BookRatingPage"; 
 import HomePage from './Components/HomePage';
+import Profile from './Components/Profile';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/book/:id" element={<BookRatingPage />} /> 
         <Route path="/homepage" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
         
        
       </Routes>

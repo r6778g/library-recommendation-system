@@ -6,7 +6,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import traceback
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
 from rest_framework.response import Response
 from importcsv.models import Book
 from .serializers import BookSerializer
@@ -16,6 +15,17 @@ from .serializers import ReviewSerializer
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from .recommendation import get_recommendations
+from .models import BorrowRecord
+from .serializers import BorrowSerializer
+
+@api_view(['POST'])
+def borrow_book(request):
+    serializer = BorrowSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message': 'Book borrowed successfully!'}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
@@ -68,26 +78,27 @@ def signup(request):
         print("Signup Error:", str(e))  
         traceback.print_exc()  # 🟢 Add this to see detailed backend error!
         return Response({"error": str(e)}, status=400)
-
 @api_view(['POST'])
 def login(request):
     data = request.data
-    print("Login attempt:", data.get('email'))  # ✅ Debug email
+    print("Login Request Data:", data)
 
-    # Check for required fields
-    if not all(key in data for key in ['email', 'password']):
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        print("❌ Missing email or password")
         return Response({"error": "Email and password are required"}, status=400)
 
     try:
-        # Find user by email
-        user = User.objects.get(email=data['email'])
-        print("User found:", user.email)  # ✅ Debug
+        user = User.objects.get(email=email)
+        print("✅ User found:", user.email)
+        print("👉 Provided password:", password)
+        print("👉 Stored hash:", user.password)
 
-        # Verify password
-        if check_password(data['password'], user.password):
-            print("Password matched!")  # ✅ Debug
-            refresh = RefreshToken.for_user(user)  # Generate token
-
+        if check_password(password, user.password):
+            print("✅ Password matched")
+            refresh = RefreshToken.for_user(user)
             serializer = UserSerializer(user)
             return Response({
                 "message": "Login successful",
@@ -98,18 +109,16 @@ def login(request):
                 }
             }, status=200)
         else:
-            print("❌ Incorrect password!")  # Debugging
+            print("❌ Password mismatch")
             return Response({"error": "Invalid credentials"}, status=401)
 
     except User.DoesNotExist:
-        print("❌ User not found!")  # Debugging
+        print("❌ User with email not found:", email)
         return Response({"error": "Invalid credentials"}, status=401)
 
     except Exception as e:
-        print("Login Error:", str(e))
+        print("🔥 Unexpected Error:", str(e))
         return Response({"error": "An error occurred during login"}, status=400)
-
-
 
 
 @api_view(['GET'])
@@ -150,3 +159,11 @@ def recommend_books(request):
 
     results = get_recommendations(title)
     return Response({'recommendations': results})
+
+@api_view(['GET'])
+def get_profile(request):
+    user = request.user
+    return Response({
+        "username": "mohit",
+        "email": "mohitpaladiya150@gmail.com",
+    })

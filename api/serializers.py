@@ -6,6 +6,12 @@ from django.contrib import admin
 admin.site.site_header = "📚 Library Recommendation Admin"
 admin.site.site_title = "Library Recommender"
 admin.site.index_title = "Welcome to the Library Recommendation Dashboard"
+from .models import BorrowRecord
+
+class BorrowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BorrowRecord
+        fields = '__all__'
 
 
 class ReviewSerializer(serializers.ModelSerializer):

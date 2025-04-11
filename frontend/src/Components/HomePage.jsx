@@ -82,7 +82,7 @@ function Homepage() {
       )}
 
       {/* SLIDER */}
-      <h2 className="slider-title">📌 Recommended for Your Department</h2>
+      <h2 className="slider-title">Recommendation System</h2>
       {currentBook && (
         <div className="carousel-container">
           <button onClick={handlePrev} className="carousel-btn">⬅️</button>
@@ -96,7 +96,7 @@ function Homepage() {
       )}
 
       {/* RANDOM BOOKS */}
-      <h2 className="random-title">🎲 Discover Random Books</h2>
+      <h2 className="random-title">Books Suggetion</h2>
       <div className="random-books-grid">
         {randomBooks.map((book) => (
           <div key={book.id} className="book-card" onClick={() => handleBookClick(book.id)}>

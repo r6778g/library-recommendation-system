@@ -7,10 +7,10 @@ const BookRatingPage = () => {
     const { id } = useParams();
     const [book, setBook] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const [borrowMessage, setBorrowMessage] = useState("");
 
-    // Get user from localStorage (optional)
     const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-    const userId = user?.id || null;  // Optional fallback if no login
+    const userId = user?.id || null;
 
     const fetchBookDetails = useCallback(async () => {
         try {
@@ -35,6 +35,25 @@ const BookRatingPage = () => {
         fetchBookReviews();
     }, [fetchBookDetails, fetchBookReviews]);
 
+    const handleBorrowBook = async () => {
+        if (!userId) {
+            setBorrowMessage("⚠️ Please log in to borrow this book.");
+            return;
+        }
+
+        try {
+            const response = await axios.post("http://localhost:8000/api/borrow/", {
+                user: userId,
+                book: id,
+            });
+
+            setBorrowMessage("✅ Book borrowed successfully!");
+        } catch (error) {
+            console.error("Error borrowing book:", error);
+            setBorrowMessage("❌ Failed to borrow book. Try again.");
+        }
+    };
+
     return book ? (
         <div className="p-6 max-w-3xl mx-auto">
             {/* Book Info */}
@@ -42,10 +61,19 @@ const BookRatingPage = () => {
                 <h1 className="text-3xl font-bold text-indigo-700">{book.title}</h1>
                 <p className="text-lg text-gray-600 mb-1">by {book.author}</p>
                 <p className="text-sm mb-1"><strong>Department:</strong> {book.department}</p>
-                <p className="text-sm">
+                <p className="text-sm mb-3">
                     <strong>Average Rating:</strong>{" "}
                     <span className="text-yellow-500 font-medium">{book.average_rating} ⭐</span>
                 </p>
+
+                <button
+                    onClick={handleBorrowBook}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow-md"
+                >
+                    📚 Borrow Book
+                </button>
+
+                {borrowMessage && <p className="mt-2 text-sm text-green-700">{borrowMessage}</p>}
             </div>
 
             {/* Reviews */}
@@ -76,7 +104,7 @@ const BookRatingPage = () => {
                 )}
             </div>
 
-            {/* Always Show Review Form (no login required) */}
+            {/* Review Form */}
             <ReviewForm bookId={id} userId={userId} fetchBookReviews={fetchBookReviews} />
         </div>
     ) : (

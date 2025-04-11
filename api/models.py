@@ -2,6 +2,15 @@ from django.db import models
 from importcsv.models import Book
 from django.contrib.auth.models import User
 
+class BorrowRecord(models.Model):
+    borrow_id = models.CharField(max_length=100, unique=True)
+    book = models.ForeignKey('importcsv.Book', on_delete=models.CASCADE,  related_name="borrow_records")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.borrow_id} - {self.user} borrowed {self.book}"
+
 
 class User(models.Model):
     DEPARTMENT_CHOICES = [
@@ -16,6 +25,7 @@ class User(models.Model):
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.name
