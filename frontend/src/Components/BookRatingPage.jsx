@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // <-- Import useNavigate here
 import axios from "axios";
 import ReviewForm from "./ReviewForm";
 
 const BookRatingPage = () => {
-    const { id } = useParams();
+    const { id } = useParams(); // Book ID from URL
     const [book, setBook] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [borrowMessage, setBorrowMessage] = useState("");
 
+    const navigate = useNavigate();  // <-- Declare navigate here
+
+    // Get user from localStorage (if logged in)
     const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
     const userId = user?.id || null;
 
+    // Fetch book details
     const fetchBookDetails = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:8000/api/books/${id}/`);
@@ -21,6 +25,7 @@ const BookRatingPage = () => {
         }
     }, [id]);
 
+    // Fetch book reviews
     const fetchBookReviews = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:8000/api/reviews/book/${id}/`);
@@ -30,30 +35,24 @@ const BookRatingPage = () => {
         }
     }, [id]);
 
+    // Load book and reviews when page loads
     useEffect(() => {
         fetchBookDetails();
         fetchBookReviews();
     }, [fetchBookDetails, fetchBookReviews]);
 
+    // Borrow book request
     const handleBorrowBook = async () => {
         if (!userId) {
             setBorrowMessage("⚠️ Please log in to borrow this book.");
             return;
         }
 
-        try {
-            const response = await axios.post("http://localhost:8000/api/borrow/", {
-                user: userId,
-                book: id,
-            });
-
-            setBorrowMessage("✅ Book borrowed successfully!");
-        } catch (error) {
-            console.error("Error borrowing book:", error);
-            setBorrowMessage("❌ Failed to borrow book. Try again.");
-        }
+        // Navigate to the borrow page if the user is logged in
+        navigate('/borrow');  // <-- Use navigate here
     };
 
+    // Render the full page
     return book ? (
         <div className="p-6 max-w-3xl mx-auto">
             {/* Book Info */}

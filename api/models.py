@@ -1,15 +1,25 @@
 from django.db import models
 from importcsv.models import Book
 from django.contrib.auth.models import User
+import uuid
+from django.utils import timezone
+
+def generate_borrow_id():
+    return f"BORROW-{uuid.uuid4().hex[:8].upper()}"
 
 class BorrowRecord(models.Model):
-    borrow_id = models.CharField(max_length=100, unique=True)
-    book = models.ForeignKey('importcsv.Book', on_delete=models.CASCADE,  related_name="borrow_records")
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+     
+       borrow_id = models.CharField(max_length=100, unique=True, editable=False, default=uuid.uuid4)
+    
+       book = models.ForeignKey('importcsv.Book', on_delete=models.CASCADE,  related_name="borrow_records")
+       user = models.ForeignKey(User, on_delete=models.CASCADE)
+      
+       borrow_date = models.DateTimeField(auto_now_add=True)
+       return_date = models.DateTimeField(null=True, blank=True)
 
 
-    def __str__(self):
-        return f"{self.borrow_id} - {self.user} borrowed {self.book}"
+       def __str__(self):
+            return f"{self.borrow_id} - {self.user} borrowed {self.book}"
 
 
 class User(models.Model):

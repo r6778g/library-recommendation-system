@@ -1,38 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Profile.css';
+import React from "react";
 
-function Profile() {
-  const [user, setUser] = useState({
-    email: '',
-    username: '',
-  });
+const Profile = () => {
+  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 
-  const token = localStorage.getItem('token'); // Auth token
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/profile/', {
-      headers: {
-        Authorization: `Token ${token}`
-      }
-    })
-    .then(res => setUser(res.data))
-    .catch(err => console.error('Error fetching user:', err));
-  }, []);
+  if (!user) {
+    return <p className="p-6 text-red-600">⚠️ No user data found. Please log in.</p>;
+  }
 
   return (
-    <div className="profile-container">
-      <h2>👤 User Profile</h2>
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+      <h1 className="text-2xl font-bold text-indigo-700 mb-4">👤 Profile</h1>
 
-      <div className="profile-info">
-        <label>Username:</label>
-        <p>{user.username}</p>
-
-        <label>Email:</label>
-        <p>{user.email}</p>
+      <div className="space-y-2 text-gray-800">
+        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>ID:</strong> {user.id}</p>
+        {/* Add more fields as needed */}
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

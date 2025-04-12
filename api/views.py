@@ -17,14 +17,25 @@ from rest_framework.response import Response
 from .recommendation import get_recommendations
 from .models import BorrowRecord
 from .serializers import BorrowSerializer
-
-@api_view(['POST'])
+from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+api_view(['POST'])
 def borrow_book(request):
-    serializer = BorrowSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({'message': 'Book borrowed successfully!'}, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    user_id = request.data.get('user')
+    book_id = request.data.get('book')
+
+    # do stuff with user_id and book_id
+
+    return Response({"message": "Book borrowed"}, status=201)
+
+def perform_create(self, serializer):
+    user = serializer.validated_data['user']
+    book = serializer.validated_data['book']
+    if Borrow.objects.filter(user=user, book=book).exists():
+        raise serializers.ValidationError("You have already borrowed this book.")
+    serializer.save()
 
 
 

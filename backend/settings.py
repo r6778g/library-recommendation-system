@@ -52,8 +52,13 @@ SIMPLE_JWT = {
 
 
 # Application definition
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Your React frontend address
+]
 
 INSTALLED_APPS = [
    "django.contrib.admin",
