@@ -13,9 +13,14 @@ function Homepage() {
   // Fetch on mount
   useEffect(() => {
     fetchUserData();
-    fetchRecommendedBooks();
     fetchRandomBooks();
   }, []);
+
+  useEffect(() => {
+    if (userData?.department) {
+      fetchRecommendedBooks(userData.department);
+    }
+  }, [userData]);
 
   // Autoplay slider
   useEffect(() => {
@@ -26,18 +31,17 @@ function Homepage() {
   }, [recommendedBooks, currentIndex]);
 
   const fetchUserData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/user/');
-      setUserData(response.data);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
+    const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+    if (user) {
+      setUserData(user);
     }
   };
 
-  const fetchRecommendedBooks = async () => {
+  const fetchRecommendedBooks = async (department) => {
     try {
-      const response = await axios.get('http://localhost:8000/api/recommended-books/');
-      setRecommendedBooks(response.data);
+      const response = await axios.get('http://localhost:8000/api/books/');
+      const filtered = response.data.filter(book => book.department === department);
+      setRecommendedBooks(filtered);
     } catch (error) {
       console.error('Error fetching recommended books:', error);
     }
@@ -46,6 +50,7 @@ function Homepage() {
   const fetchRandomBooks = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/random-books/');
+      
       setRandomBooks(response.data);
     } catch (error) {
       console.error('Error fetching random books:', error);
@@ -72,6 +77,10 @@ function Homepage() {
 
   return (
     <div className="homepage-container">
+      <button
+  onClick={() => navigate("/dashboard")}
+  className="back-button">Dashboard
+</button>
       {/* USER INFO */}
       {userData && (
         <div className="user-info">
@@ -79,10 +88,11 @@ function Homepage() {
           <p>Email: {userData.email}</p>
           <p>Department: {userData.department}</p>
         </div>
+        
       )}
 
       {/* SLIDER */}
-      <h2 className="slider-title">Recommendation System</h2>
+      <h2 className="slider-title">Books Recommended for {userData?.department}</h2>
       {currentBook && (
         <div className="carousel-container">
           <button onClick={handlePrev} className="carousel-btn">⬅️</button>
@@ -96,19 +106,23 @@ function Homepage() {
       )}
 
       {/* RANDOM BOOKS */}
-      <h2 className="random-title">Books Suggetion</h2>
+      
+      <h2 className="random-title">Books Suggestion</h2>
       <div className="random-books-grid">
-        {randomBooks.map((book) => (
-          <div key={book.id} className="book-card" onClick={() => handleBookClick(book.id)}>
-            <h4>{book.title}</h4>
-            <p><strong>Author:</strong> {book.author}</p>
-            <p><strong>Department:</strong> {book.department}</p>
-          </div>
-        ))}
+        {randomBooks.length > 0 ? (
+          randomBooks.map((book) => (
+            <div key={book.id} className="book-card" onClick={() => handleBookClick(book.id)}>
+              <h4>{book.title}</h4>
+              <p><strong>Author:</strong> {book.author}</p>
+              <p><strong>Department:</strong> {book.department}</p>
+            </div>
+          ))
+        ) : (
+          <p className="empty-review">No books found in your department.</p>
+        )}
       </div>
     </div>
   );
 }
 
 export default Homepage;
-

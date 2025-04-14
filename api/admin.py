@@ -23,5 +23,3 @@ admin.site.unregister(User)
 @admin.register(User)
 class CustomUserAdmin(BaseUserAdmin):
     list_display = ['id', 'username', 'email', 'is_staff']
-
-

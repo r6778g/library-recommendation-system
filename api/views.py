@@ -155,9 +155,16 @@ class RecommendedBooksView(APIView):
         # logic to filter recommended books
         return Response(data)
 
+
 class RandomBooksView(APIView):
     def get(self, request):
-        books = Book.objects.order_by('?')[:15]
+        department = request.query_params.get('department')
+
+        if department:
+            books = Book.objects.filter(department=department).order_by('?')[:15]
+        else:
+            books = Book.objects.order_by('?')[:15]
+
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 

@@ -1,79 +1,30 @@
+/* ========== VARIABLES ========== */
+:root {
+  --primary-blue: #1565c0;
+  --light-blue: #90caf9;
+  --hover-blue: #42a5f5;
+  --gradient-start: #f9f9f9;
+  --gradient-end: #e3f2fd;
+  --error-bg: #fce4ec;
+  --error-text: #d81b60;
+  --green: #4caf50;
+  --green-hover: #45a049;
+  --neutral: #f0f2f5;
+  --text-dark: #333;
+  --text-light: #555;
+}
+
+/* ========== CONTAINER ========== */
 .dashboard-container {
   padding: 30px;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #f9f9f9, #e3f2fd);
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
   min-height: 100vh;
 }
 
-.dashboard-title {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #0d47a1;
-}
-
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  padding: 10px;
-  width: 250px;
-  font-size: 1rem;
-  border: 2px solid #90caf9;
-  border-radius: 8px;
-}
-
-.department-select {
-  padding: 10px;
-  font-size: 1rem;
-  border: 2px solid #90caf9;
-  border-radius: 8px;
-}
-
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-.book-card {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  border-left: 5px solid #42a5f5;
-}
-
-.book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-.book-card h3 {
-  margin-top: 0;
-  color: #1565c0;
-}
-
-.book-card p {
-  margin: 5px 0;
-  color: #555;
-}
-
-.null-container {
-  background-color: #fce4ec;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  color: #d81b60;
-  grid-column: 1 / -1;
-}
+/* ========== HEADER ========== */
 .dashboard-header {
-  background-color: #f0f2f5;
+  background-color: var(--neutral);
   padding: 1rem 2rem;
   border-radius: 12px;
   margin-bottom: 1.5rem;
@@ -87,37 +38,98 @@
 }
 
 .dashboard-title {
+  text-align: center;
   font-size: 1.8rem;
   font-weight: bold;
-  color: #333;
-  margin: 0;
+  color: var(--primary-blue);
+  margin: 0 0 20px 0;
 }
 
+/* ========== CONTROLS ========== */
+.controls,
 .header-controls {
   display: flex;
-  gap: 1rem;
+  justify-content: center;
   align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
 }
 
+.search-input,
+.department-select {
+  padding: 0.6rem;
+  width: 250px;
+  font-size: 1rem;
+  border: 2px solid var(--light-blue);
+  border-radius: 8px;
+}
+
+/* ========== HOME BUTTON ========== */
 .home-button {
-  background-color: #4caf50;
+  background-color: var(--green);
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .home-button:hover {
-  background-color: #45a049;
+  background-color: var(--green-hover);
 }
 
-.search-input,
-.department-select {
-  padding: 0.6rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+/* ========== BOOK CARDS ========== */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.book-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 5px solid var(--hover-blue);
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.book-card h3 {
+  margin-top: 0;
+  color: var(--primary-blue);
+}
+
+.book-card p {
+  margin: 5px 0;
+  color: var(--text-light);
+}
+
+/* ========== NO BOOKS FOUND ========== */
+.null-container {
+  background-color: var(--error-bg);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--error-text);
+  grid-column: 1 / -1;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  .search-input,
+  .department-select {
+    width: 100%;
+  }
+
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
 }

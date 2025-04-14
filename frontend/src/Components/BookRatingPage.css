@@ -1,0 +1,195 @@
+:root {
+    --primary-blue: #1565c0;
+    --light-blue: #90caf9;
+    --hover-blue: #42a5f5;
+    --error-text: #d81b60;
+    --bg-light: #f5faff;
+    --bg-white: #ffffff;
+    --text-dark: #333;
+    --text-gray: #666;
+  }
+  
+  /* ========== MAIN CONTAINER ========== */
+  .rating-page {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-light);
+    min-height: 100vh;
+  }
+  
+  /* ========== HEADER ========== */
+  .rating-header {
+    text-align: center;
+    color: var(--primary-blue);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* ========== BOOK DETAILS ========== */
+  .book-details {
+    background-color: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .book-details h2 {
+    margin: 0;
+    color: var(--primary-blue);
+  }
+  
+  .book-details p {
+    margin-top: 0.5rem;
+    color: var(--text-gray);
+  }
+  
+  /* ========== RATING FORM ========== */
+  .rating-form {
+    background-color: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .rating-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+  
+  .rating-form select,
+  .rating-form textarea {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 1.5px solid var(--light-blue);
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    resize: vertical;
+  }
+  
+  .rating-form button {
+    background-color: var(--hover-blue);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+  
+  .rating-form button:hover {
+    background-color: var(--primary-blue);
+  }
+  
+  /* ========== USER REVIEWS ========== */
+  .review-section {
+    margin-top: 2rem;
+  }
+  
+  .review-card {
+    background-color: var(--bg-white);
+    padding: 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+  }
+  
+  .review-card h4 {
+    margin: 0 0 0.3rem;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+  }
+  
+  .review-card .rating {
+    color: #ffa726;
+    margin-bottom: 0.3rem;
+  }
+  
+  .review-card p {
+    color: var(--text-gray);
+    margin: 0.2rem 0;
+  }
+  
+  /* ========== ERROR / EMPTY STATES ========== */
+  .empty-review {
+    text-align: center;
+    color: var(--error-text);
+    font-style: italic;
+    margin-top: 2rem;
+  }
+  
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 600px) {
+    .rating-page {
+      padding: 1rem;
+    }
+  
+    .rating-header {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .rating-form select {
+    width: 120px; /* 👈 Sets a fixed width of 120 pixels for the dropdown. You can adjust this as needed. 
+                     Common values: 
+                       - 100px: very compact
+                       - 120px: standard fit for 1-5 ratings
+                       - auto: fits content dynamically 
+                       - 100%: stretches to container width */
+    padding: 0.5rem; /* Adds inner spacing so text doesn't touch the edges */
+    font-size: 1rem; /* Makes text easily readable */
+    border: 1.5px solid var(--light-blue); /* Light blue border for visibility */
+    border-radius: 8px; /* Rounded corners for modern look */
+    margin-bottom: 1.2rem; /* Adds spacing below the dropdown */
+    background-color: var(--bg-white); /* Sets background to white */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%23666' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+    /* Adds a custom dropdown arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 1rem center; /* Positions the arrow icon inside */
+    background-size: 0.65rem auto;
+    appearance: none; /* Removes default browser styles */
+    cursor: pointer; /* Changes cursor on hover to indicate interactivity */
+  }
+
+  .rating-form textarea {
+    width: 100%; /* 👈 Takes full width of the form container. 
+                    You can set a fixed width like 300px for minimal design */
+    max-width: 400px; /* 👈 Prevents it from stretching too wide on large screens */
+    min-width: 200px; /* 👈 Ensures it's not too small to type in */
+    padding: 0.7rem; /* Space inside the box */
+    font-size: 1rem; /* Readable text */
+    border: 1.5px solid var(--light-blue); /* Soft border */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 1.2rem; /* Space below the textarea */
+    resize: vertical; /* User can only resize vertically */
+  }
+  /* Back Button on Left Side */
+/* Back Button on Left Side */
+.back-button-container {
+    position: absolute; /* Position it relative to the screen */
+    top: 1rem; /* Adjust the top position */
+    left: 1rem; /* Align to the left */
+    z-index: 10; /* Ensure it's above other elements */
+  }
+  
+  .back-button {
+    background-color: var(--light-blue);
+    color: var(--text-dark);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+  
+  .back-button:hover {
+    background-color: var(--primary-blue);
+    color: white;
+  }
