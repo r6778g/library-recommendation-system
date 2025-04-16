@@ -58,6 +58,8 @@ try {
       headers: { "Content-Type": "application/json" },
   });
   // Rest of your code
+  // Save user details
+  localStorage.setItem('user', JSON.stringify(response.data.user));
 
       console.log("Signup successful:", response.data);
       // Redirect to login page after successful signup
@@ -156,3 +158,4 @@ try {
 };
 
 export default Signup;
+
