@@ -1,9 +1,16 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import this
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const navigate = useNavigate(); // ✅ Define navigate
-  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   if (!user) {
     return <p className="p-6 text-red-600">⚠️ No user data found. Please log in.</p>;
