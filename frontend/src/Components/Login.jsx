@@ -6,31 +6,35 @@ import './Login.css';
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login/', formData);
 
-      // Save token
       localStorage.setItem('token', response.data.token);
-
-      // Save user details
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      // Redirect to dashboard
-      navigate('/Dashboard');
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
-      setError('Invalid Credentials');
+      if (err.response) {
+        setError(err.response.data.message || 'Invalid email or password.');
+      } else {
+        setError('Unable to connect to the server.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,6 +42,7 @@ const Login = () => {
     <form onSubmit={handleSubmit} className="login-form">
       <h2>Login</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      
       <input
         type="email"
         name="email"
@@ -46,6 +51,7 @@ const Login = () => {
         onChange={handleChange}
         required
       />
+      
       <input
         type="password"
         name="password"
@@ -54,11 +60,14 @@ const Login = () => {
         onChange={handleChange}
         required
       />
-      <button type="submit">Login</button>
+      
+      <button type="submit" disabled={loading}>
+        {loading ? 'Logging in...' : 'Login'}
+      </button>
 
       <div className="signup-link">
         <p>Don't have an account?</p>
-        <Link to="/Signup">
+        <Link to="/signup">
           <button type="button">Signup</button>
         </Link>
       </div>
